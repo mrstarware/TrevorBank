@@ -1,10 +1,9 @@
-﻿using System;
+﻿using CoreContext;
+using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using CoreContext;
-using Microsoft.AspNetCore.Mvc;
 using static CoreContext.BankContext;
+using Microsoft.EntityFrameworkCore;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -29,16 +28,35 @@ namespace TrevorBank.Controllers
 
         // GET api/<controller>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public BankClient Get(int id)
         {
-            return "value";
+            var bankingClient = BankContext.BankingClients.Include(a => a.PrimaryAddress)
+                //.Include(c => c.Checks)
+                .SingleOrDefault(x => x.IdCustomer == id);
+
+            bankingClient.Checks = new List<Check>();
+            return bankingClient;
         }
+
+        //// GET api/<controller>/John CommonName Doe
+        //[HttpGet("{fullName}")]
+        //public BankClient Get(string fullName)
+        //{
+        //    var names = fullName.Split(' ');
+            
+        //    return BankContext.BankingClients.SingleOrDefault(x => x.FirstName == names[0] && x.MiddleName == names[1] && x.LastName == names[2]);
+        //}
 
         // POST api/<controller>
         [HttpPost]
         public void Post([FromBody]BankClient client)
         {
             if (client == null) return; 
+
+            if (client.PrimaryAddress != null) // Need to see if there's a better way to do this.
+            {
+                client.PrimaryAddress = BankContext.Addresses.SingleOrDefault(x => x.IdAddress == client.PrimaryAddress.IdAddress);
+            }
             BankContext.BankingClients.Add(client);
             BankContext.SaveChanges();
         }

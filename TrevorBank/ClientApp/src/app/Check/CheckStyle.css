@@ -1,0 +1,64 @@
+.CheckCard {
+  background-color: lightgray;
+}
+
+#PayTo {
+  margin : 20px 0px 0px 0px;
+}
+
+#CustomerFullName {
+  margin-bottom : 0px;
+  text-transform : uppercase;
+  font-weight : bold;
+}
+
+#CustomerAddress{
+  margin-top: 0px;
+}
+
+.SmallNewLine {
+  margin: 0px 0px 0px 0px;
+  line-height: 0px;
+}
+
+#PayToTop {
+  margin: 0px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 8px;
+}
+#PayToBottom {
+  margin: 1px 0px 0px 0px;
+  padding: 0px 0px 0px 0px;
+  font-size: 8px;
+  width: 100%;
+}
+
+#PayToEntry {
+  margin: 0px 0px 0px 0px;
+  width: 90%;
+  float: right;
+  
+}
+
+#PayToWords{
+  width: 10%;
+  float : left;
+}
+
+.NoBullets {
+  list-style-type: none;
+  padding: 0px 0px 0px 0px;
+  margin: 0px 0px 0px 0px;
+  font-size: 0px;
+  width : 100%;
+}
+
+#CheckNumber{
+  float : right;
+  margin : 0px 8px 0px 0px;
+}
+
+#DigitsCheckAmount{
+  border-color : darkgray;
+  border-width : 1px;
+}

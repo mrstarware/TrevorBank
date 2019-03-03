@@ -1,19 +1,19 @@
 interface Address {
-  IdAddress: number;
-  Zipcode: string;
-  State: string;
-  City: string;
-  Street: string;
-  Number: string;
+  idAddress: number;
+  zipcode: string;
+  state: string;
+  city: string;
+  street: string;
+  number: string;
 }
 
-interface Customer {
-  IdCustomer: number;
-  FirstName: string;
-  MiddleName: string;
-  LastName: string;
-  PrimaryAddress: Address
-  //public ICollection < Check > Checks { get; set; }
+interface BankClient {
+  idCustomer: number;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  primaryAddress: Address;
+  //checks: Check[];
 }
 
 interface Check {

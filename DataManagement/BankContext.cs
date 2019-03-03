@@ -15,7 +15,7 @@ namespace CoreContext
         {
             [Key]
             public int IdAddress { get; set; }
-            public string ZipCode { get; set; }
+            public string Zipcode { get; set; }
             public string State { get; set; }
             public string City { get; set; }
             public string Street { get; set; }
@@ -31,8 +31,9 @@ namespace CoreContext
             public string LastName { get; set; }
 
             public Address PrimaryAddress { get; set; }
-            public ICollection<Check> Checks { get; set; }
+            public List<Check> Checks { get; set; }
         }
+
         public class Check
         {
             [Key]
@@ -42,7 +43,7 @@ namespace CoreContext
             public string PayTo { get; set; }
             public int DollarAmount { get; set; }
             public string Memo { get; set; }
-            public DateTime Date { get; set; }
+            public DateTime CheckDate { get; set; }
         }
 
         public DbSet<BankClient> BankingClients { get; set; }

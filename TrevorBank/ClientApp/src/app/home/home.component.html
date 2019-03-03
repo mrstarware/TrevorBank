@@ -13,34 +13,7 @@
 </ul>
 <p>The <code>ClientApp</code> subdirectory is a standard Angular CLI application. If you open a command prompt in that directory, you can run any <code>ng</code> command (e.g., <code>ng test</code>), or use <code>npm</code> to install extra packages into it.</p>-->
 <h1> national of Bank.First() </h1>
-<p> Check Data :  {{checkResponse.payTo}} </p>
+
+<CheckSheet></CheckSheet>
 
 
-<div class="CheckCard">
-  <!--<mat-card-title>Check Me out!</mat-card-title>-->
-  <mat-card-content>
-    <!-- subcomponent-->
-    <div></div>
-      <label class="CustomerFullName"> {{Customer.FirstName}} {{Customer.MiddleName}} {{Customer.LastName}} </label>
-    <p class="SmallNewLine"></p>
-    <label class="CustomerAddress">
-        {{Customer.PrimaryAddress.Number}} {{Customer.PrimaryAddress.Street}}
-        <br />
-        {{Customer.PrimaryAddress.City}}, {{Customer.PrimaryAddress.State}} {{Customer.PrimaryAddress.Zipcode}}
-      </label>
-
-    <p class="PayTo"> PAY TO: <input matInput placeholder="Customer Name"> </p>
-    $ <p class="DigitsCheckAmount">{{Check.dollarAmount}}</p>
-    <p class="SpelledDollars"> <input type="text"> DOLLARS</p> <!--Seal goes here-->
-
-    <label > bank name </label>
-
-    <p>
-      Memo: <input type="text"> {{Customer.FirstName}} {{Customer.MiddleName}} {{Customer.LastName}} <b> MP</b>
-    </p>
-
-    <p>Routing number junk</p>
-    <mat-card-actions><button mat-button>(click)="SendCheck()">Send Check</button></mat-card-actions>
-  </mat-card-content>
-
-</div>
