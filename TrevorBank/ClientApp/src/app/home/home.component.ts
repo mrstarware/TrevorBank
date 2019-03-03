@@ -38,8 +38,8 @@ export class HomeComponent {
         Zipcode: "97078",
         State: "Oregon",
         City: "Beaverton",
-        Street: "187th ave",
-        Number : "5378 sw",
+        Street: "64789 Street",
+        Number : "12345 sw",
       }
     };
   }
