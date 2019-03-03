@@ -1,0 +1,22 @@
+.CheckCard {
+  background-color: lightblue;
+}
+
+.PayTo {
+  margin-top: 20px;
+}
+
+.CustomerFullName {
+  margin-bottom : 0px;
+  text-transform : uppercase;
+  font-weight : bold;
+}
+
+.CustomerAddress{
+  margin-top: 0px;
+}
+
+.SmallNewLine {
+  margin : 0px 0 0px 0;
+  line-height : 1px;
+}
