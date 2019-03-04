@@ -12,12 +12,14 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module'
 import { CheckComponent } from './Check/Check.Component';
+import { UserEntryComponent } from './UserEntry/UserEntry.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
+    UserEntryComponent,
     CheckComponent,
     CounterComponent,
     FetchDataComponent

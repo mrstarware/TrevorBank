@@ -49,9 +49,9 @@ namespace TrevorBank.Controllers
 
         // POST api/<controller>
         [HttpPost]
-        public void Post([FromBody]BankClient client)
+        public int Post([FromBody]BankClient client)
         {
-            if (client == null) return; 
+            if (client == null) return 0; 
 
             if (client.PrimaryAddress != null) // Need to see if there's a better way to do this.
             {
@@ -59,6 +59,8 @@ namespace TrevorBank.Controllers
             }
             BankContext.BankingClients.Add(client);
             BankContext.SaveChanges();
+            BankContext.Entry(client).Reload();
+            return client.IdCustomer;
         }
 
         // PUT api/<controller>/5

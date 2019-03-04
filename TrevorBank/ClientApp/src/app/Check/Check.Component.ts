@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit, Input, EventEmitter, Output } from '@angular/core';
+import { Component, Inject, OnInit, Input, EventEmitter, Output, SimpleChanges, OnChanges } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 
@@ -7,7 +7,7 @@ import { MatCardModule } from '@angular/material/card';
   templateUrl: './Check.component.html',
   styleUrls: ['CheckStyle.css']
 })
-export class CheckComponent implements OnInit {
+export class CheckComponent implements OnInit, OnChanges {
 
   @Input() idBankingClient: number;
 
@@ -67,8 +67,35 @@ export class CheckComponent implements OnInit {
     return 1;
   }
 
-  ngOnInit() {
+  loadChecks() {
 
+    this._http.get<BankClient>(this._baseUrl + `api/BankClient/${this.idBankingClient}`).subscribe(result => {
+      this.bankClient = result;
+      if (this.idCheck == -1) {
+        let lastCheckNumber: number = 0;
+        if (this.bankClient.checks.length > 0) {
+          //this.bankClient.checks.sort(this.sortChecks);
+          lastCheckNumber = this.bankClient.checks[this.bankClient.checks.length - 1].checkNumber;
+        }
+        this.freshCheck.checkNumber = lastCheckNumber + 1;
+      }
+      else {
+        this.idCheck;
+        this._http.get<Check>(this._baseUrl + `api/Check/${this.idCheck}`).subscribe(result => {
+          this.freshCheck = result;
+        }, error => console.error(error));
+      }
+    }, error => console.error(error));
+  }
+
+  ngOnInit() {
+    this.loadChecks();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes.idBankingClient.firstChange === true) {
+      this.loadChecks();
+    }
     this._http.get<BankClient>(this._baseUrl + `api/BankClient/${this.idBankingClient}`).subscribe(result => {
       this.bankClient = result;
       if (this.idCheck == -1) {
@@ -102,6 +129,15 @@ export class CheckComponent implements OnInit {
     return this._http.post<Check>(sendCheckUrl, checkToSend).subscribe(
       data => {
         console.log("POST Request is successful ", data);
+        this.freshCheck = {
+          idCheck: 0,
+          idCustomer: 0,
+          checkNumber: 0,
+          payTo: "",
+          dollarAmount: 0,
+          memo: "",
+          checkDate: new Date()
+        };
         this.reloadChecks.emit(true);
       },
       error => { console.log("Error", error); });

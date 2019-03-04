@@ -1,0 +1,14 @@
+<div>
+  <input matInput type="text" placeholder="First Name" [(ngModel)]="bankClient.firstName"> <br />
+  <input matInput type="text" placeholder="Middle Name" [(ngModel)]="bankClient.middleName"><br />
+  <input matInput type="text" placeholder="Last Name" [(ngModel)]="bankClient.lastName"><br />
+
+  <input matInput type="text" placeholder="Street Number" [(ngModel)]="bankClient.primaryAddress.number"><br />
+  <input matInput type="text" placeholder="Street Name" [(ngModel)]="bankClient.primaryAddress.street"><br />
+  <input matInput type="text" placeholder="City" [(ngModel)]="bankClient.primaryAddress.city"><br />
+  <input matInput type="text" placeholder="State" [(ngModel)]="bankClient.primaryAddress.state"><br />
+  <input matInput type="text" placeholder="Zip code" [(ngModel)]="bankClient.primaryAddress.zipcode"><br />
+
+  <button mat-raised-button id="SubmitUser" (click)="SubmitUser()">Submit</button>
+  <label>{{idClient}}</label>
+</div>

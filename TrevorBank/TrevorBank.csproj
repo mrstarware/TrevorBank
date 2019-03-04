@@ -28,6 +28,7 @@
     <None Remove="ClientApp\src\app\Check\Check.Component.html" />
     <None Remove="ClientApp\src\app\Check\Check.Component.ts" />
     <None Remove="ClientApp\src\app\material.module.ts" />
+    <None Remove="ClientApp\src\app\UserEntry\UserEntry.component.ts" />
     <None Remove="ClientApp\src\Models\Models.ts" />
   </ItemGroup>
 
@@ -39,6 +40,7 @@
     <TypeScriptCompile Include="ClientApp\src\app\Check\Check.Component.ts" />
     <TypeScriptCompile Include="ClientApp\src\app\Check\Check.Component.html" />
     <TypeScriptCompile Include="ClientApp\src\app\material.module.ts" />
+    <TypeScriptCompile Include="ClientApp\src\app\UserEntry\userentry.component.ts" />
     <TypeScriptCompile Include="ClientApp\src\Models\Models.ts" />
   </ItemGroup>
 
