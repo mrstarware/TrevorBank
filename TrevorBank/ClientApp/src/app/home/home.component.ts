@@ -11,6 +11,7 @@ export class HomeComponent {
 
   checkHistory: number[];
   idBankingClient: number = 6;
+  isReady: boolean = false;
 
   _http: HttpClient;
   _baseUrl: string;
@@ -30,9 +31,14 @@ export class HomeComponent {
     return 1;
   }
 
-  ngOnInit() {
+  lookup() {
     this._http.get<number[]>(this._baseUrl + `api/Check/GetAllSentBy/${this.idBankingClient}`).subscribe(result => {
       this.checkHistory = result;
-      }, error => console.error(error));
+      this.isReady = true;
+    }, error => console.error(error));
+  }
+
+  ngOnInit() {
+    
   }
 }

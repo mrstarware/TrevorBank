@@ -22,12 +22,31 @@ export class CheckComponent implements OnInit {
   checkResponse: Check;
   bankClient: BankClient;
 
+  isSent: boolean = false;
+
 
   _http: HttpClient;
   _baseUrl: string;
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this._http = http;
     this._baseUrl = baseUrl;
+
+    this.bankClient = {
+      firstName: "Loading",
+      lastName: "Loading",
+      middleName: "Loading",
+      idCustomer : -1,
+      primaryAddress : {
+        idAddress : -1,
+        street : "Loading",
+        number : "Loading",
+        city : "Loading",
+        state : "Loading",
+        zipcode : "00000",
+      },
+      checks : []
+    };
+
     this.freshCheck = {
       idCheck: 0,
       idCustomer: 0,
@@ -53,24 +72,23 @@ export class CheckComponent implements OnInit {
 
   ngOnInit() {
 
-    if (this.idCheck == -1) {
-      this._http.get<BankClient>(this._baseUrl + `api/BankClient/${this.idBankingClient}`).subscribe(result => {
-        this.bankClient = result;
-
+    this._http.get<BankClient>(this._baseUrl + `api/BankClient/${this.idBankingClient}`).subscribe(result => {
+      this.bankClient = result;
+      if (this.idCheck == -1) {
         let lastCheckNumber: number = 0;
         if (this.bankClient.checks.length > 0) {
           //this.bankClient.checks.sort(this.sortChecks);
           lastCheckNumber = this.bankClient.checks[this.bankClient.checks.length - 1].checkNumber;
         }
         this.freshCheck.checkNumber = lastCheckNumber + 1;
-      }, error => console.error(error));
-    }
-    else {
-      this._http.get<Check>(this._baseUrl + `api/Check/${this.idCheck}`).subscribe(result => {
-        this.freshCheck = result;
-      }, error => console.error(error));
-    }
-
+      }
+      else {
+        this.idCheck;
+        this._http.get<Check>(this._baseUrl + `api/Check/${this.idCheck}`).subscribe(result => {
+          this.freshCheck = result;
+        }, error => console.error(error));
+      }
+    }, error => console.error(error));
   }
 
   onChange(value) {
@@ -89,7 +107,10 @@ export class CheckComponent implements OnInit {
     };
 
     return this._http.post<Check>(sendCheckUrl, checkToSend).subscribe(
-      data => { console.log("POST Request is successful ", data); },
+      data => {
+        console.log("POST Request is successful ", data);
+        this.isSent = true;
+      },
       error => { console.log("Error", error); });
   }
 }

@@ -1,11 +1,14 @@
 <h1> national of Bank.First() </h1>
 
-<CheckSheet [idBankingClient]=6 [active]="true" [idCheck]=-1></CheckSheet>
-<br />
-<CheckSheet [idBankingClient]=6 [active]="false" [idCheck]=4></CheckSheet>
-<!-- Angular -->
-<!--<ul>
-  <li *ngFor="let check of checkHistory; let i = index">
-    <CheckSheet [idBankingClient]=6 [active]="false" [idCheck]=4></CheckSheet>
-  </li>
-</ul>-->
+<input matInput type="number" id="idClientInput" placeholder="enter idClient #" [(ngModel)]="idBankingClient">
+<button mat-raised-button id="lookupClient" (click)="lookup()">Lookup</button>
+
+<span *ngIf="isReady">
+  <CheckSheet [idBankingClient]="idBankingClient" [active]="true" [idCheck]=-1></CheckSheet>
+  <br />
+  <ul>
+    <li *ngFor="let check of checkHistory; let i = index">
+      <CheckSheet [idBankingClient]="idBankingClient" [active]="false" [idCheck]=check></CheckSheet>
+    </li>
+  </ul>
+</span>
