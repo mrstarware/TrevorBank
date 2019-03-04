@@ -132,7 +132,7 @@ export class CheckComponent implements OnInit, OnChanges {
         this.freshCheck = {
           idCheck: 0,
           idCustomer: 0,
-          checkNumber: 0,
+          checkNumber: this.freshCheck.checkNumber + 1,
           payTo: "",
           dollarAmount: 0,
           memo: "",
