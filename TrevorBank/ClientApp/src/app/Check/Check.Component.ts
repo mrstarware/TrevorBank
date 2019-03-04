@@ -15,15 +15,12 @@ export class CheckComponent implements OnInit {
 
   @Input() idCheck: number;
 
-  @Output() childEvent = new EventEmitter();
+  @Output() reloadChecks = new EventEmitter<boolean>();
 
   sentChecks: Check[];
   freshCheck: Check;
   checkResponse: Check;
   bankClient: BankClient;
-
-  isSent: boolean = false;
-
 
   _http: HttpClient;
   _baseUrl: string;
@@ -91,10 +88,6 @@ export class CheckComponent implements OnInit {
     }, error => console.error(error));
   }
 
-  onChange(value) {
-    this.childEvent.emit(value);
-  }
-
   sendCheck() {
     var sendCheckUrl = this._baseUrl + "api/Check";
     var checkToSend: Check = {
@@ -109,7 +102,7 @@ export class CheckComponent implements OnInit {
     return this._http.post<Check>(sendCheckUrl, checkToSend).subscribe(
       data => {
         console.log("POST Request is successful ", data);
-        this.isSent = true;
+        this.reloadChecks.emit(true);
       },
       error => { console.log("Error", error); });
   }

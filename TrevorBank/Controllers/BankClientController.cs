@@ -33,7 +33,7 @@ namespace TrevorBank.Controllers
             var bankingClient = BankContext.BankingClients.Include(a => a.PrimaryAddress)
                 .Include(c => c.Checks)
                 .SingleOrDefault(x => x.IdCustomer == id);
-
+            if (bankingClient == null) { return null; }
             bankingClient.Checks = bankingClient.Checks ?? new List<Check>();
             return bankingClient;
         }

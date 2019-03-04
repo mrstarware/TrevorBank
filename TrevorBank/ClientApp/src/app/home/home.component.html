@@ -4,7 +4,7 @@
 <button mat-raised-button id="lookupClient" (click)="lookup()">Lookup</button>
 
 <span *ngIf="isReady">
-  <CheckSheet [idBankingClient]="idBankingClient" [active]="true" [idCheck]=-1></CheckSheet>
+  <CheckSheet [idBankingClient]="idBankingClient" [active]="true" [idCheck]=-1 (reloadChecks)="lookup()">></CheckSheet>
   <br />
   <ul>
     <li *ngFor="let check of checkHistory; let i = index">
