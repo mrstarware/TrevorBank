@@ -32,6 +32,14 @@ namespace TrevorBank.Controllers
            return _bankContext.Checks.SingleOrDefault(x => x.IdCheck == id);
         }
 
+        // GET api/<controller>/5
+        
+        [HttpGet("GetAllSentBy/{id}")]
+        public List<int> GetAllSentBy(int id)
+        {
+            return _bankContext.Checks.Where(x => x.IdCustomer == id).Select(x => x.IdCheck).ToList();
+        }
+
         // POST api/<controller>
         [HttpPost]
         public void Post([FromBody]Check sentCheck)

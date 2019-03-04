@@ -62,3 +62,7 @@
   border-color : darkgray;
   border-width : 1px;
 }
+
+#SendCheck {
+  background-color : dimgrey;
+}

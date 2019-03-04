@@ -2,7 +2,7 @@
   <mat-card-content>
     <div></div>
     <label id="CustomerFullName"> {{bankClient.firstName}} {{bankClient.middleName}} {{bankClient.lastName}} </label>
-    <label id="CheckNumber">105</label>
+    <label id="CheckNumber">{{freshCheck.checkNumber}}</label>
     <p class="SmallNewLine"></p>
     <label id="CustomerAddress">
       {{bankClient.primaryAddress.number}} {{bankClient.primaryAddress.street}}
@@ -19,8 +19,9 @@
         </ul>
       </section>
       <section id="PayToEntry">
-        <input matInput placeholder="Customer Name"> $<input matInput type="number" id="DigitsCheckAmount" placeholder="0.00">
-        <p id="SpelledDollars"> <input type="text"> DOLLARS</p>
+        <input matInput placeholder="Name of recipient" [(ngModel)]="freshCheck.payTo" disabled ="!{{active}}">
+        $<input matInput type="number" id="DigitsCheckAmount" placeholder="0.00" [(ngModel)]="freshCheck.dollarAmount" disabled ="!{{active}}">
+        <p id="SpelledDollars"> <input type="text" [(ngModel)] ="freshCheck.writtenDollars" disabled> DOLLARS</p>
       </section>
 
     </section>
@@ -29,10 +30,12 @@
     <label id="BankName"> national of Bank.First() </label>
 
     <p>
-      Memo: <input type="text"> {{bankClient.firstName}} {{bankClient.middleName}} {{bankClient.lastName}} <b> MP</b>
+      Memo: <input type="text" [(ngModel)]="freshCheck.memo" disabled ="!{{active}}"> SPACES HERE {{bankClient.firstName}} {{bankClient.middleName}} {{bankClient.lastName}} <b> MP</b>
     </p>
     <p>010101010  -  101 010 101 0 10101</p>
-    <mat-card-actions><button mat-button>(click)="SendCheck()">Send Check</button></mat-card-actions>
+    <mat-card-actions>
+      <button mat-raised-button id="SendCheck" (click)="sendCheck()">Send Check {{active}}</button>
+    </mat-card-actions>
   </mat-card-content>
 
 </div>  

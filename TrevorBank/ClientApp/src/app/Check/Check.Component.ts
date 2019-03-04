@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, Input, EventEmitter, Output } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { MatCardModule } from '@angular/material/card';
 
@@ -9,7 +9,16 @@ import { MatCardModule } from '@angular/material/card';
 })
 export class CheckComponent implements OnInit {
 
+  @Input() idBankingClient: number;
+
+  @Input() active: boolean;
+
+  @Input() idCheck: number;
+
+  @Output() childEvent = new EventEmitter();
+
   sentChecks: Check[];
+  freshCheck: Check;
   checkResponse: Check;
   bankClient: BankClient;
 
@@ -19,40 +28,68 @@ export class CheckComponent implements OnInit {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string) {
     this._http = http;
     this._baseUrl = baseUrl;
-    this.checkResponse = {
+    this.freshCheck = {
       idCheck: 0,
       idCustomer: 0,
       checkNumber: 0,
-      payTo: "Hello World",
+      payTo: "",
       dollarAmount: 0,
-      memo: "Memo",
-      checkDate: new Date(2019, 2, 3)
-    };
-
-    this.bankClient = {
-      idCustomer: 0,
-      firstName: "Trevor",
-      middleName: "T",
-      lastName: "Tiernan",
-      primaryAddress: {
-        idAddress: 0,
-        zipcode: "97078",
-        state: "Oregon",
-        city: "Beaverton",
-        street: "64789 Street",
-        number: "12345 sw",
-      },
-      //checks: []
+      memo: "",
+      checkDate: new Date()
     };
   }
 
-  ngOnInit() {
-    this._http.get<BankClient>(this._baseUrl + 'api/BankClient/6').subscribe(result => {
-      this.bankClient = result;
-    }, error => console.error(error));
+  sortChecks(a: Check, b: Check): number {
+    if (a.idCheck < b.idCheck) {
+      return -1;
+    }
+    if (a.idCheck == b.idCheck)
+    {
+      return 0;
+    }
 
-    this._http.get<BankClient>(this._baseUrl + 'api/BankClient/6').subscribe(result => {
-      this.bankClient = result;
-    }, error => console.error(error));
+    return 1;
+  }
+
+  ngOnInit() {
+
+    if (this.idCheck == -1) {
+      this._http.get<BankClient>(this._baseUrl + `api/BankClient/${this.idBankingClient}`).subscribe(result => {
+        this.bankClient = result;
+
+        let lastCheckNumber: number = 0;
+        if (this.bankClient.checks.length > 0) {
+          //this.bankClient.checks.sort(this.sortChecks);
+          lastCheckNumber = this.bankClient.checks[this.bankClient.checks.length - 1].checkNumber;
+        }
+        this.freshCheck.checkNumber = lastCheckNumber + 1;
+      }, error => console.error(error));
+    }
+    else {
+      this._http.get<Check>(this._baseUrl + `api/Check/${this.idCheck}`).subscribe(result => {
+        this.freshCheck = result;
+      }, error => console.error(error));
+    }
+
+  }
+
+  onChange(value) {
+    this.childEvent.emit(value);
+  }
+
+  sendCheck() {
+    var sendCheckUrl = this._baseUrl + "api/Check";
+    var checkToSend: Check = {
+      checkNumber: this.freshCheck.checkNumber,
+      idCustomer: this.bankClient.idCustomer,
+      payTo: this.freshCheck.payTo,
+      dollarAmount: this.freshCheck.dollarAmount,
+      memo: this.freshCheck.memo,
+      checkDate: this.freshCheck.checkDate,
+    };
+
+    return this._http.post<Check>(sendCheckUrl, checkToSend).subscribe(
+      data => { console.log("POST Request is successful ", data); },
+      error => { console.log("Error", error); });
   }
 }

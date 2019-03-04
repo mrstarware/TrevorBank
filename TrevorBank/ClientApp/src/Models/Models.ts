@@ -13,15 +13,16 @@ interface BankClient {
   middleName: string;
   lastName: string;
   primaryAddress: Address;
-  //checks: Check[];
+  checks: Check[];
 }
 
 interface Check {
-  idCheck: number;
+  idCheck?: number;
   checkNumber: number;
   idCustomer: number;
   payTo: string;
   dollarAmount: number;
+  writtenDollars?: string;
   memo: string;
   checkDate: Date;
 }

@@ -41,7 +41,7 @@ namespace CoreContext
             public int CheckNumber { get; set; }
             public int IdCustomer { get; set; }
             public string PayTo { get; set; }
-            public int DollarAmount { get; set; }
+            public decimal DollarAmount { get; set; }
             public string Memo { get; set; }
             public DateTime CheckDate { get; set; }
         }
