@@ -19,8 +19,8 @@
         </ul>
       </section>
       <section id="PayToEntry">
-        <input matInput placeholder="Name of recipient" [(ngModel)]="freshCheck.payTo" disabled ="!{{active}}">
-        $<input matInput type="number" id="DigitsCheckAmount" placeholder="0.00" [(ngModel)]="freshCheck.dollarAmount" disabled ="!{{active}}">
+        <input matInput placeholder="Name of recipient" [(ngModel)]="freshCheck.payTo" [disabled] ="active == false">
+        $<input matInput type="number" id="DigitsCheckAmount" placeholder="0.00" [(ngModel)]="freshCheck.dollarAmount" [disabled] ="active == false">
         <p id="SpelledDollars"> <input type="text" [(ngModel)] ="freshCheck.writtenDollars" disabled> DOLLARS</p>
       </section>
 
@@ -30,11 +30,13 @@
     <label id="BankName"> national of Bank.First() </label>
 
     <p>
-      Memo: <input type="text" [(ngModel)]="freshCheck.memo" disabled ="!{{active}}"> SPACES HERE {{bankClient.firstName}} {{bankClient.middleName}} {{bankClient.lastName}} <b> MP</b>
+      Memo: <input type="text" [(ngModel)]="freshCheck.memo" [disabled] ="!active"> SPACES HERE {{bankClient.firstName}} {{bankClient.middleName}} {{bankClient.lastName}} <b> MP</b>
     </p>
     <p>010101010  -  101 010 101 0 10101</p>
     <mat-card-actions>
-      <button mat-raised-button id="SendCheck" (click)="sendCheck()">Send Check {{active}}</button>
+      <span *ngIf="active">
+      <button mat-raised-button id="SendCheck" (click)="sendCheck()">Send Check</button>
+    </span>
     </mat-card-actions>
   </mat-card-content>
 
